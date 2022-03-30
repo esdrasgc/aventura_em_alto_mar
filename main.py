@@ -1,14 +1,14 @@
-import ssl
 from funcoes import faltouOxigenio, respirar, avancarOuRetroceder, nadar, cacaAoTesouro, slowprint, status, finalizarJogo, apresentarRegrasDoJogo
 
 iniciar_jogo = True 
 while iniciar_jogo:
-
+####################### DISCENTE: ESDRAS GOMES CARVALHO ################################################
+##### PROJETO: AVENTURA EM ALTO MAR  ////  DISCIPLINA DEVELOPER LIFE //// INSTITUIÇÃO: INSPER ##########
 
 ## OBS.: No jogo foi utilizada a regra de que, ao acabar o oxigênio, o jogador não continua a jogada (nadar ou cacar tesouros)
 ## Além disso, os demais jogadores que não tiverem chegado ao submarino perdem logo que acaba o oxigênio
 
-####### INICIALIZAÇÃO DE VARIAVEIS UTILIZADAS AO LONGO DO PROGRAMA #################
+####### INICIALIZAÇÃO DE VARIAVEIS UTILIZADAS AO LONGO DO PROGRAMA ####################################
     iniciar_jogo = False
 
     while_jogadores = True
