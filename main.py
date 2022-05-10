@@ -113,54 +113,56 @@ while iniciar_jogo:
                     if quantidade_de_jogadores_que_ficaram_sem_oxigenio > 1:
                         sSlow = '\nMas veja o lado bom, ao menos você não vai perecer nas profundezas sozinho.\nA amizade do séc XXI é ir pro fundo do poço e levar os amiguinhos junto.'
                         slowprint(sSlow)
-
-                if jogadorEstaAvancando[index_jogador]: ## Faz a verificação se o jogador está indo em direção ao fundo do mar ou do submarino
-                                                        ## caso esteja indo ao submarino, ela não roda mais, pois não é mais possivel mudar o sentido.
-                    escolhaDaDirecao = avancarOuRetroceder(quantidadeTesouros)
-                    if escolhaDaDirecao == 'retroceder':
-                        
-                        sSlow = '\nA caminho do submarino é nosso destino! Lembre que não será mais possível mudar de rumo.'
-                        slowprint(sSlow)
-
-                        jogadorEstaAvancando[index_jogador] = False
-                    elif escolhaDaDirecao == 'avancar':
-
-                        sSlow = '\nAudacioso como um bom aventureiro deve ser, siga em frente, os tesouros o aguardam.'
-                        slowprint(sSlow)
-
-                    else:
-                        raise Exception(f'Algum erro ocorreu com a função avancarOuRetroceder, pois foi retornado: {escolhaDaDirecao}.')
                 
-                else:
+                if jogadorNaoFinalizou[index_jogador]:
+                        
+                    if jogadorEstaAvancando[index_jogador]: ## Faz a verificação se o jogador está indo em direção ao fundo do mar ou do submarino
+                                                            ## caso esteja indo ao submarino, ela não roda mais, pois não é mais possivel mudar o sentido.
+                        escolhaDaDirecao = avancarOuRetroceder(quantidadeTesouros)
+                        if escolhaDaDirecao == 'retroceder':
+                            
+                            sSlow = '\nA caminho do submarino é nosso destino! Lembre que não será mais possível mudar de rumo.'
+                            slowprint(sSlow)
+
+                            jogadorEstaAvancando[index_jogador] = False
+                        elif escolhaDaDirecao == 'avancar':
+
+                            sSlow = '\nAudacioso como um bom aventureiro deve ser, siga em frente, os tesouros o aguardam.'
+                            slowprint(sSlow)
+
+                        else:
+                            raise Exception(f'Algum erro ocorreu com a função avancarOuRetroceder, pois foi retornado: {escolhaDaDirecao}.')
                     
-                    sSlow = '\nComo já estás a retornar, não tens escolha a não seguir em frente.\nApresse o nado para não acabar o oxigênio.'
-                    slowprint(sSlow)
-
-                # A função nadar retorna a quantidade de passos a serem dados pelo jogador
-                passos = nadar(quantidadeTesouros)
-
-                if jogadorEstaAvancando[index_jogador]: ## Analisa o sentido do movimento e incrementa ou decrementa do nivel de profundidade do jogador.
-                    profundidade[index_jogador] = profundidade[index_jogador] + passos
-                    if profundidade[index_jogador] > 32:
-
-                        sSlow = f'\nComo o nivel de profundidade máximo é de 32, o valor de sua profundidade atual de {profundidade[index_jogador]} será reduzido ao limite.'
+                    else:
+                        
+                        sSlow = '\nComo já estás a retornar, não tens escolha a não seguir em frente.\nApresse o nado para não acabar o oxigênio.'
                         slowprint(sSlow)
 
-                        profundidade[index_jogador] = 32
-                else: 
-                    profundidade[index_jogador] = profundidade[index_jogador] - passos
-                    if profundidade[index_jogador] < 1: ## Caso o jogador volte para uma profundidade nula ou negativa o jogo finaliza
-                                                        ## pois ele terá chegado ao submarino.
-                        pontuacaoDoJogador[index_jogador] = finalizarJogo(listaTesouros[index_jogador])
-                        jogadorNaoFinalizou[index_jogador] = False
-                        continua_o_jogo = False
+                    # A função nadar retorna a quantidade de passos a serem dados pelo jogador
+                    passos = nadar(quantidadeTesouros)
 
-                if continua_o_jogo:
-                    ## chama a função cacaAoTesouro que retorna a lista de Tesouros atualizada
-                    listaTesouros[index_jogador] = cacaAoTesouro(quantidadeTesouros, profundidade[index_jogador], listaTesouros[index_jogador], jogadorEstaAvancando[index_jogador])
+                    if jogadorEstaAvancando[index_jogador]: ## Analisa o sentido do movimento e incrementa ou decrementa do nivel de profundidade do jogador.
+                        profundidade[index_jogador] = profundidade[index_jogador] + passos
+                        if profundidade[index_jogador] > 32:
 
-                    ## apresenta os dados atualizados do jogador. 
-                    status(nivelOxigenio, profundidade[index_jogador], listaTesouros[index_jogador], index_jogador+1)
+                            sSlow = f'\nComo o nivel de profundidade máximo é de 32, o valor de sua profundidade atual de {profundidade[index_jogador]} será reduzido ao limite.'
+                            slowprint(sSlow)
+
+                            profundidade[index_jogador] = 32
+                    else: 
+                        profundidade[index_jogador] = profundidade[index_jogador] - passos
+                        if profundidade[index_jogador] < 1: ## Caso o jogador volte para uma profundidade nula ou negativa o jogo finaliza
+                                                            ## pois ele terá chegado ao submarino.
+                            pontuacaoDoJogador[index_jogador] = finalizarJogo(listaTesouros[index_jogador])
+                            jogadorNaoFinalizou[index_jogador] = False
+                            continua_o_jogo = False
+
+                    if continua_o_jogo:
+                        ## chama a função cacaAoTesouro que retorna a lista de Tesouros atualizada
+                        listaTesouros[index_jogador] = cacaAoTesouro(quantidadeTesouros, profundidade[index_jogador], listaTesouros[index_jogador], jogadorEstaAvancando[index_jogador])
+
+                        ## apresenta os dados atualizados do jogador. 
+                        status(nivelOxigenio, profundidade[index_jogador], listaTesouros[index_jogador], index_jogador+1)
 
             else:
 
